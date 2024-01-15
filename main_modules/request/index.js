@@ -1,37 +1,8 @@
 import config from '@/.env/index.js'
+import { errorMessage } from './config.js'
 export default {
 	intercept: {
 		BASE_URL: config.baseURL,
-		// 接口报错提示处理
-		errorMessage(res) {
-			const {
-				data
-			} = res
-			if (data.code && data.code != 200) {
-				let str = ''
-				if (data.msg) {
-					str = data.msg
-				} else {
-					str = '呀! 接口开小差啦; 贵客! 骚等哦!'
-				}
-				uni.showToast({
-					title: str,
-					icon: 'none',
-					duration: 2000,
-					success: () => {
-						let zh = str.indexOf('token')
-						let en = str.indexOf('Token')
-						if (zh != -1 || en != -1) {
-							uni.clearStorageSync()
-							store.commit('updateUserBill', {})
-							uni.navigateTo({
-								url: '/pages/login/index'
-							})
-						}
-					}
-				})
-			}
-		},
 		// 请求拦截器
 		beforeRequest(options = {}) {
 			return new Promise((resolve, reject) => {
@@ -41,14 +12,13 @@ export default {
 					.stringify(options.data);
 				// 封装自己的请求头
 				let token = uni.getStorageSync('token') || ''
-				let lang = uni.getStorageSync('lang') == 'zh-Hans' ? 'zh-cn' : 'en'
+				let str = uni.getStorageSync('lang')
+				let lang = str == 'zh-Hans' ? 'zh-cn' : (str == 'zh-Hant' ? 'zh-hk' : 'en')
 				options.header = {
-					...options.header,
-					token,
-					lang
+					...options.header
 				}
 				// 额外处理
-				options.url = options.url + `?lang=${lang}`
+				options.url = options.url + `?lang=${lang}&token=${token}`
 				resolve(options)
 			})
 		},
@@ -58,10 +28,10 @@ export default {
 				const [err, res] = data;
 				// 处理错误
 				if (res) {
-					this.errorMessage(res)
+					errorMessage(res)
 				}
 				if (err) {
-					this.errorMessage(err)
+					errorMessage(err)
 					return reject(err);
 				}
 				return resolve(res)

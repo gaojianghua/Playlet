@@ -8,19 +8,13 @@ module.exports = {
 	mainColor: {
 		type: String,
 		default: () => {
-			return '#fb7299'
+			return '#EE7623'
 		}
 	},
 	load: {
 		type: [String, Number],
 		default: () => {
 			return 2
-		}
-	},
-	scrollTop: {
-		type: [String, Number],
-		default: () => {
-			return 0
 		}
 	},
 	bgColor: {
@@ -57,6 +51,12 @@ module.exports = {
 		type: Boolean,
 		default: () => {
 			return true
+		}
+	},
+	isTab: {
+		type: Boolean,
+		default: () => {
+			return false
 		}
 	},
 	isCustomRefresh: {

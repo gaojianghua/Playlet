@@ -1,6 +1,7 @@
 import {
 	getSysConfig,
-	getUserInfo
+	getUserInfo,
+	getLangConfig
 } from '@/main_modules/request/api/get.js'
 
 
@@ -18,42 +19,50 @@ export default {
 			uni.setStorageSync('config', data)
 		}
 	},
-	// 获取购物车数据
-	async getSysConfig({
+	// 获取多语言列表
+	async getLangList({
 		commit
 	}) {
 		let {
 			data,
 			code
-		} = await getCartList()
+		} = await getLangConfig()
 		if (code == 200) {
-			commit('updateCartList', data.list)
-			uni.setStorageSync('cartList', data.list)
+			data.forEach((item) => {
+				switch (item.value){
+					case 'zh-cn':
+					item.code = 'zh-Hans'
+						break;
+					case 'en':
+					item.code = 'en'
+						break;
+					case 'zh-hk':
+					item.code = 'zh-Hant'
+						break;
+				}
+			})
+			commit('updateLangList', data)
+			uni.setStorageSync('langList', data)
 		}
 	},
 	// 获取用户信息
 	async getUserinfo({
 		commit
 	}) {
-		// let {
-		// 	data,
-		// 	code
-		// } = await getUserInfo()
-		let code = 200
-		let data = {
-			name: '高江华',
-			id: '86579236',
-			points: 20808,
-			phone: '15257184434',
-			email: 'G598670138@163.com',
-			avatar: 'https://gaojianghua.oss-cn-hangzhou.aliyuncs.com/home/wolffy.png',
-			inviteCode: '86E7B8',
-			isVIP: true,
-			VIPExpirationTime: '2025-12-12'
-		}
+		let {
+			data,
+			code
+		} = await getUserInfo()
 		if (code == 200) {
-			commit('updateUserinfo', data)
-			uni.setStorageSync('userinfo', data)
+			if (data.id == 0) {
+				uni.removeStorageSync('token')
+				uni.removeStorageSync('userinfo')
+				commit('updateToken', '')
+				commit('updateUserinfo', {})
+			}else {
+				commit('updateUserinfo', data)
+				uni.setStorageSync('userinfo', data)
+			}
 		}
 	}
 }

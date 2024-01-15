@@ -1,5 +1,7 @@
 import App from './App.vue'
 import Vue from 'vue'
+import uView from '@/uni_modules/uview-ui'
+Vue.use(uView)
 import './.env'
 // 多语言
 import messages from './locale/index'
@@ -13,15 +15,15 @@ Vue.use(VueI18n)
 export const i18n = new VueI18n(i18nConfig)
 // 直接引入实例对象进行挂载
 import http from '@/main_modules/request/method.js'
-import socket from '@/main_modules/socket/index.js'
-import worker from '@/main_modules/worker/index.js'
+// import socket from '@/main_modules/socket/index.js'
+// import worker from '@/main_modules/worker/index.js'
 import store from '@/store';
 import tools from '@/main_modules/tools/index.js'
 import check from '@/main_modules/check/index.js'
 import multiportApi from '@/main_modules/uni-api/index.js'
 Vue.prototype.$http = http
-Vue.prototype.$socket = socket
-Vue.prototype.$worker = worker
+// Vue.prototype.$socket = socket
+// Vue.prototype.$worker = worker
 Vue.prototype.$store = store
 Vue.prototype.$tools = tools
 Vue.prototype.$check = check
@@ -32,8 +34,7 @@ import sqlite from '@/main_modules/sqlite/index.js'
 Vue.prototype.$sqlite = sqlite
 // #endif
 // 通过 install 函数挂载 Vue 原型方法
-import uView from '@/uni_modules/uview-ui'
-Vue.use(uView)
+
 import MToast from '@/main_modules/main-ui/m-toast/index.js'
 Vue.use(MToast)
 import cache from '@/main_modules/cache/index.js'

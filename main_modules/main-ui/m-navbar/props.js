@@ -21,7 +21,7 @@ module.exports = {
 	},
 	bgColor: {
 		type: String,
-		default: '#151521'
+		default: 'transparent'
 	},
 	iconColor: {
 		type: String,

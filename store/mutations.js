@@ -53,4 +53,10 @@ export default {
 	updateCartList(state, e) {
 		state.cartList = e
 	},
+	updateAllType(state, e) {
+		state.allType = e
+	},
+	updateRecommList(state, e) {
+		state.recommList = e
+	},
 }

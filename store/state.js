@@ -14,7 +14,7 @@ export default {
 	browserFitHeight: uni.getStorageSync('browserFitHeight') || 0, //兼容浏览器多出的高度
 	lang: uni.getStorageSync('lang') || 'en',	//国际化多语言
 	langList: uni.getStorageSync('langList') || [], //国际化多语言列表
-	moneySymbol: uni.getStorageSync('moneySymbol') || '￥',	//货币符号
+	moneySymbol: uni.getStorageSync('moneySymbol') || '$',	//货币符号
 	appSystemInfo: uni.getStorageSync('appSystemInfo') || {}, //应用系统信息
 	androidAppName: 'uni.Gao.GongYue', // Android端APP包名
 	iosAppName: 'uni.Gao.GongYue', // IOS端APP包名
@@ -22,33 +22,27 @@ export default {
 	 * 自定义 tabbar 数据
 	**/
 	tabbar: [{
-			pagePath: 'pages/tabbar/home/index',
-			iconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/home.png',
-			selectedIconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/home-active.png',
-			text: 'page.首页'
+			pagePath: 'pages/tabbar/theater/index',
+			iconPath: '/static/img/tabbar/theater.png',
+			selectedIconPath: '/static/img/tabbar/theater-active.png',
+			text: 'page.影院'
 		},
 		{
-			pagePath: 'pages/tabbar/kind/index',
-			iconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/kind.png',
-			selectedIconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/kind-active.png',
-			text: 'page.分类'
+			pagePath: 'pages/tabbar/follow/index',
+			iconPath: '/static/img/tabbar/follow.png',
+			selectedIconPath: '/static/img/tabbar/follow-active.png',
+			text: 'page.追剧'
 		},
 		{
-			pagePath: 'pages/tabbar/media/index',
-			iconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/media.png',
-			selectedIconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/media-active.png',
-			text: 'page.视频'
+			pagePath: 'pages/tabbar/recommend/index',
+			iconPath: '/static/img/tabbar/recommend.png',
+			selectedIconPath: '/static/img/tabbar/recommend-active.png',
+			text: 'page.推荐'
 		},
 		{
-			pagePath: 'pages/tabbar/cart/index',
-			iconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/cart.png',
-			selectedIconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/cart-active.png',
-			text: 'page.购物车'
-		},
-		{
-			pagePath: 'pages/tabbar/mine/index',
-			iconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/mine.png',
-			selectedIconPath: 'https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/tabbar/mine-active.png',
+			pagePath: 'pages/tabbar/my/index',
+			iconPath: '/static/img/tabbar/my.png',
+			selectedIconPath: '/static/img/tabbar/my-active.png',
 			text: 'page.我的'
 		}
 	],
@@ -65,4 +59,6 @@ export default {
 	historyList: uni.getStorageSync('historyList') || [], // 搜索历史记录
 	orderHistoryList: uni.getStorageSync('orderHistoryList') || [], // 订单搜索历史记录
 	allHistoryList: uni.getStorageSync('allHistoryList') || [], // 娱乐搜索历史记录
+	allType: uni.getStorageSync('allType') || [], // 分类列表
+	recommList: uni.getStorageSync('recommList') || [], // 搜索历史
 }

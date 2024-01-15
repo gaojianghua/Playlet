@@ -20,7 +20,7 @@
 						:class="textDirection === 'center' ? 'j-center' : 'pl-10'">
 					<!-- #endif -->
 						<view v-if="!isTab" class="tabbar-back d-flex j-center a-center p-1" @click.stop="unBack ? onBack() : retreat()">
-							<u-image height="60rpx" width="60rpx" src="https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/common/back.svg"></u-image>
+							<u-image height="24rpx" width="34rpx" src="/static/img/common/back.png"></u-image>
 							<!-- <u-icon name="arrow-left" :color="iconColor" size="20"></u-icon> -->
 						</view>
 						<view v-else class="tabbar-back">
@@ -31,10 +31,10 @@
 						</template>
 						<template v-else>
 							<!-- #ifndef MP -->
-							<view class="tabbar-title" :style="{color: textColor, ...textStyle}">
+							<view class="tabbar-title text-ellipsis1" :style="{color: textColor, ...textStyle}">
 								<!-- #endif -->
 								<!-- #ifdef MP -->
-								<view class="tabbar-title" :style="[{color: textColor}, textStyle]">
+								<view class="tabbar-title text-ellipsis1" :style="[{color: textColor}, textStyle]">
 								<!-- #endif -->
 								{{i18n ? $t(value) : value}}
 							</view>
@@ -49,7 +49,7 @@
 						:style="{right: `calc(20rpx + ${miniProgramCapsule.width}px + 100vw - ${miniProgramCapsule.right}px)`}"
 						 @click="selectLang">
 						 <!-- #endif -->
-							<u-image height="50rpx" width="50rpx" src="https://gongyue-shop.oss-cn-hangzhou.aliyuncs.com/img/home/locale.svg"></u-image>
+							<u-image height="50rpx" width="50rpx" src="/static/img/theater/locale.svg"></u-image>
 						</view>
 						<slot v-else name="right"></slot>
 					</view>
@@ -101,6 +101,7 @@
 			width: 100%;
 
 			.tabbar-title {
+				max-width: 550rpx;
 				font-size: 28rpx;
 				font-weight: 500;
 			}

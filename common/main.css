@@ -740,6 +740,38 @@ body {
 	-webkit-box-orient: vertical;
 }
 
+.text-ellipsis {
+	/* #ifndef APP-PLUS-NVUE */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: initial;
+	/* #endif */
+	/* #ifdef APP-PLUS-NVUE */
+	lines: 4;
+	/* #endif */
+	/* 显示多行 */
+	display: -webkit-box;
+	/* 5为显示的行数 */
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+
+.text-ellipsis5 {
+	/* #ifndef APP-PLUS-NVUE */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: initial;
+	/* #endif */
+	/* #ifdef APP-PLUS-NVUE */
+	lines: 5;
+	/* #endif */
+	/* 显示多行 */
+	display: -webkit-box;
+	/* 5为显示的行数 */
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}
+
 .bg-primary {
 	background-color: var(--primary);
 }

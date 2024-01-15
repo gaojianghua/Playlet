@@ -49,7 +49,7 @@
 			bgColor: {
 				type: String,
 				default: () => {
-					return '#f27299'
+					return '#EE7623'
 				}
 			},
 			title: {

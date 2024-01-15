@@ -4,7 +4,7 @@ page {
 	height: 100%;
 	font-size: 28rpx;
 	line-height: 1.8;
-	background: #FFFFFF;
+	background: #111;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 
 .page {
 	height: 100%;
-	background: #f5f5f5;
+	background: #111;
 }
 
 /* (2) 图片默认100%宽度 */
@@ -26,7 +26,7 @@ image {
 /* 主色调 */
 /* 主背景颜色（橙色）*/
 .main-bg-color {
-	background: #fb7299;
+	background: #EE7623;
 }
 
 /* 主点击背景颜色（淡橙色）*/
@@ -36,12 +36,12 @@ image {
 
 /* 主字体颜色（橙色）*/
 .main-text-color {
-	color: #fb7299 !important;
+	color: #EE7623 !important;
 }
 
 /* 主边框颜色 */
 .main-border-color {
-	border-color: #fb7290;
+	border-color: #EE7623;
 }
 
 /* 主题卡片 */
@@ -58,5 +58,6 @@ image {
 /* 自定义 */
 view,
 text {
+	font-family: 'Sofia Pro','-apple-system','BlinkMacSystemFont',"Helvetica Neue","Helvetica","Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",'sans-serif';
 	box-sizing: border-box !important;
 }

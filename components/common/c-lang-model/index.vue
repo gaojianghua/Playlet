@@ -3,8 +3,8 @@
 		<view class="d-flex a-center pb-2 flex-column">
 			<view class="lang border-2 py-1 mt-2 d-flex a-center j-center" :class="lang == item.code ? 'active text-white' : 'default main-text-color'"
 				v-for="(item, i) in $store.state.langList" :key="i"
-				@click="lang = item.code">
-				{{$t(item.name)}}
+				@click="openLang(i)">
+				{{item.title}}
 			</view>
 		</view>
 	</m-modal>
@@ -36,6 +36,10 @@
 			// 取消
 			close() {
 				this.$emit('close')
+			},
+			// 选择语言
+			openLang(i) {
+				this.lang = this.$store.state.langList[i].code
 			}
 		}
 	}
@@ -48,12 +52,12 @@
 	}
 	
 	.active {
-		border-color: #ffd300;
-		background-color: #f27299;
+		border-color: #EE7623;
+		background-color: #EE7623;
 	}
 	
 	.default {
-		border-color: #f27299;
+		border-color: #EE7623;
 		background-color: #fff;
 	}
 </style>

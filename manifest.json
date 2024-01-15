@@ -1,7 +1,7 @@
 {
-    "name" : "宫悦商城",
-    "appid" : "__UNI__8AA65D7",
-    "description" : "欢迎来到宫悦商城！我们致力于为您提供便捷、安全和多样化的购物体验。宫悦商城是一个全方位的在线购物平台，汇集了各个领域的优质商品和服务。",
+    "name" : "fiiishort",
+    "appid" : "__UNI__FC58031",
+    "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -21,22 +21,7 @@
         },
         /* 模块配置 */
         "modules" : {
-            "VideoPlayer" : {},
-            "Push" : {},
-            "SQLite" : {},
-            "Barcode" : {},
-            "Maps" : {},
-            "iBeacon" : {},
-            "Geolocation" : {},
-            "Fingerprint" : {},
-            "FaceID" : {},
-            "Contacts" : {},
-            "Camera" : {},
-            "Bluetooth" : {},
-            "FacialRecognitionVerify" : {},
-            "Speech" : {},
-            "Payment" : {},
-            "Share" : {}
+            "VideoPlayer" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -70,14 +55,14 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
-                "schemes" : "gongyue",
+                "schemes" : "fiiishort",
                 "minSdkVersion" : 21,
                 "targetSdkVersion" : 33
             },
             /* ios打包配置 */
             "ios" : {
                 "dSYMs" : false,
-                "urltypes" : "gongyue",
+                "urltypes" : "fiiishort",
                 "UIBackgroundModes" : "audio,location"
             },
             /* SDK配置 */
@@ -169,7 +154,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxe0ebf860492fe0f5",
+        "appid" : "",
         "setting" : {
             "urlCheck" : true,
             "es6" : true,
@@ -179,7 +164,7 @@
         "usingComponents" : true,
         "permission" : {},
         "unipush" : {
-            "enable" : true
+            "enable" : false
         },
         "secureNetwork" : {
             "enable" : false
@@ -227,16 +212,10 @@
             "https" : false
         },
         "sdkConfigs" : {
-            "maps" : {
-                "amap" : {
-                    "key" : "3e10d54e9fbfe1890ccbde1d8a8b1d91",
-                    "securityJsCode" : "922a3ef18f64f0566044108ef5a45972",
-                    "serviceHost" : "https://gaojianghua.cn/_AMapService"
-                }
-            }
+            "maps" : {}
         },
         "unipush" : {
-            "enable" : true
+            "enable" : false
         },
         "uniStatistics" : {
             "enable" : true

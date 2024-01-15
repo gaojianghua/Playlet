@@ -85,8 +85,8 @@
 			justify-content: space-around;
 			padding-bottom: constant(safe-area-inset-bottom);
 			padding-bottom: env(safe-area-inset-bottom);
-			background-color: #fff;
-			border-top: 1rpx solid #eee;
+			background-color: #111;
+			// border-top: 1rpx solid #eee;
 
 			.tabbar-item {
 				display: block;
@@ -100,7 +100,7 @@
 					padding: 12rpx 0;
 					
 					.tabbar-label {
-						color: #999;
+						color: #888;
 					}
 
 					&.active {
@@ -108,7 +108,7 @@
 						// border-radius: 8rpx;
 
 						.tabbar-label {
-							color: #fb7299;
+							color: #EE7623;
 						}
 					}
 				}
