@@ -20,8 +20,8 @@
 							</view>
 						</view>
 					</view>
-					<view :class="item.de_type == 1 ? 'main-text-color' : 'text-light-muted'">
-						{{item.de_type == 1 ? '+' : '-'}}{{$store.state.moneySymbol}}{{item.money}}
+					<view class="d-flex a-center line-h" :class="item.de_type == 1 ? 'main-text-color' : 'text-light-muted'">
+						{{item.de_type == 1 ? '+' : '-'}}{{item.money}} <u-image width="30rpx" height="30rpx" src="/static/img/my/coin.png"></u-image>
 					</view>
 				</view>
 			</view>

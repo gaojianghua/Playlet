@@ -72,8 +72,7 @@
 								<view class="item-price d-flex a-center flex-column j-center mt-5">
 									<span class="price font-weight line-h"
 										:class="VIPIndex == i ? 'price-active': ''">{{item.price}}</span>
-									<span class="syml font-weight mt-1"
-										:class="VIPIndex == i ? 'syml-active': ''">{{$store.state.moneySymbol}}</span>
+									<u-image class="mt-2" width="50rpx" height="50rpx" src="/static/img/my/coin.png"></u-image>
 								</view>
 							</view>
 						</view>
@@ -86,12 +85,12 @@
 				<view class="bottombox-name font-weight line-h">
 					{{$t('开通会员')}}
 				</view>
-				<view v-if="VIPPriceList[VIPIndex]" class="bottombox-price line-h mt-1">
-					{{VIPPriceList[VIPIndex].name}} {{$store.state.moneySymbol}} {{VIPPriceList[VIPIndex].price}}
+				<view v-if="VIPPriceList[VIPIndex]" class="bottombox-price d-flex a-center line-h mt-1">
+					{{VIPPriceList[VIPIndex].name}} / {{VIPPriceList[VIPIndex].price}}
+					<u-image width="30rpx" height="30rpx" src="/static/img/my/coin.png"></u-image>
 				</view>
 			</view>
 		</view>
-		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -145,10 +144,9 @@
 				let { code, data } = await buyVIP(this.query)
 				if (code == 200) {
 					this.$store.dispatch('getUserinfo')
-					this.$refs.uToast.show({
-						message: this.$t('开通VIP成功'),
-						type: 'success',
-						duration: 1200
+					uni.showToast({
+						icon: 'none',
+						title: this.$t('开通VIP成功')
 					})
 				}
 			},

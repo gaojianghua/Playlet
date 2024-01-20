@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 		<!-- 顶部导航栏 -->
-		<m-navbar bgColor="#transparent" :borderBottom="false" textColor="#fff" value="page.已取消支付" i18n></m-navbar>
+		<m-navbar unBack @pageBack="pageBack" bgColor="#transparent" :borderBottom="false" textColor="#fff" value="page.已取消支付" i18n></m-navbar>
 		<view class="content pt-10 d-flex a-center flex-column">
 			<u-image width="160rpx" height="160rpx" src="/static/img/common/cancel.svg"></u-image>
 			<view class="mt-10 font" style="color: #8a8a8a;">
@@ -37,6 +37,10 @@
 			// 取消支付
 			async cancelPay() {
 				await cancelPay(this.query)
+			},
+			// 返回
+			pageBack() {
+				this.$tools.Navigate.switchTab('/pages/tabbar/theater/index')
 			}
 		}
 	}

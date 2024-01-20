@@ -39,8 +39,8 @@
 			</view>
 		</m-scroll-y>
 		<view v-if="isEdit && list.length != 0" class="settlement border-top main-border-color px-3 w-100 position-fixed bottom-0 left-0 d-flex a-center">
-			<view class="d-flex a-center">
-				<view @click="openAllCheck" class="check-icon d-flex a-center j-center" :class="allChecked ? 'check-active': ''">
+			<view class="d-flex a-center" @click="openAllCheck">
+				<view class="check-icon d-flex a-center j-center" :class="allChecked ? 'check-active': ''">
 					<u-image v-if="allChecked" width="18" height="18" src="/static/img/common/task.svg"></u-image>
 				</view>
 				<view class="ml-1 line-h" :class="allChecked ? 'main-text-color' : 'text-white'">

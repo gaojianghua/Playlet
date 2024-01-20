@@ -80,8 +80,6 @@
 				</view>
 			</view>
 		</m-scroll-y>
-		<!-- 弹框 -->
-		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 

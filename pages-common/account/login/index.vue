@@ -23,14 +23,13 @@
 					{{$t('立即登录')}}
 				</view>
 				<view class="notice mt-3 text-center"
-					@click="$tools.Navigate.navigateTo('/pages-common/account/register/index')">
+					@click="$tools.Navigate.redirectTo('/pages-common/account/register/index')">
 					{{$t('注册账号 ->')}}
 				</view>
 				<u-image class="mt-auto" width="100vw" height="426rpx"
 					src="/static/img/common/login-b.png"></u-image>
 			</view>
 		</m-scroll-y>
-		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -55,17 +54,15 @@
 			// 登录
 			async submitLogin() {
 				if(!this.query.account) {
-					return this.$refs.uToast.show({
-						message: this.$t('请输入邮箱'),
-						type: 'warning',
-						duration: 1500
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('请输入邮箱')
 					})
 				}
 				if(this.isLoginType == 3 && !this.query.password) {
-					return this.$refs.uToast.show({
-						message: this.$t('请输入密码'),
-						type: 'warning',
-						duration: 1500
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('请输入密码')
 					})
 				}
 				let {code, data}  = await login(this.query)
@@ -75,11 +72,12 @@
 					this.$store.commit('updateUserinfo', data.userinfo)
 					this.$store.commit('updateToken', data.token)
 					this.$store.dispatch('getUserinfo')
-					this.$refs.uToast.show({
-						message: this.$t('登录成功'),
-						type: 'success',
-						duration: 1200,
-						complete: () => this.$tools.Navigate.navigateBack()
+					uni.showToast({
+						icon: 'none',
+						title: this.$t('登录成功'),
+						success() {
+							this.$tools.Navigate.navigateBack()
+						}
 					})
 				}
 			}

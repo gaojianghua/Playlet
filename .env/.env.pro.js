@@ -1,3 +1,3 @@
 export default {
-	baseURL: 'https://api.gaojianghua.cn',
+	baseURL: 'https://api.fiiishort.com',
 }

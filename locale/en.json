@@ -7,7 +7,7 @@
 	"page.注册": "Sign Up",
 	"page.搜索": "Search",
 	"page.设置": "Setting",
-	"page.分类筛选": "Category",
+	"page.分类筛选": "Genres",
 	"page.新剧专区": "New Drama",
 	"page.热门排行": "Hot Rank",
 	"page.免费专区": "Free Zone",
@@ -92,6 +92,7 @@
 	"尊贵的VIP会员": "Distinguished VIP member",
 	"已购买全集": "all episode purchased",
 	"已购买单集": "a episode purchased",
+	"购买成功": "successful purchase",
 	
 
 
@@ -357,7 +358,7 @@
 	"分": "Score",
 	"每日精选": "Daily Picks",
 	"本": "Book",
-	"换一换": "Change It",
+	"换一换": "Refresh",
 	"猜你喜欢": "Guess what you like",
 	"分类筛选": "Category Screen",
 	"书友在读": "People reading",

@@ -36,7 +36,6 @@
 					src="/static/img/common/login-b.png"></u-image>
 			</view>
 		</m-scroll-y>
-		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -59,42 +58,39 @@
 			// 注册
 			async submitRegister() {
 				if(!this.query.account) {
-					return this.$refs.uToast.show({
-						message: this.$t('请输入邮箱'),
-						type: 'warning',
-						duration: 1500
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('请输入邮箱')
 					})
 				}
 				if(!this.query.password) {
-					return this.$refs.uToast.show({
-						message: this.$t('请输入密码'),
-						type: 'warning',
-						duration: 1500
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('请输入密码')
 					})
 				}
 				if(!this.query.repassword) {
-					return this.$refs.uToast.show({
-						message: this.$t('请再次输入密码'),
-						type: 'warning',
-						duration: 1500
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('请再次输入密码')
 					})
 				}
 				if(this.query.repassword != this.query.password) {
-					return this.$refs.uToast.show({
-						message: this.$t('两次输入密码不一致'),
-						type: 'warning',
-						duration: 1500
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('两次输入密码不一致')
 					})
 				}
 				let { code, data } = await register(this.query)
 				if (code == 200) {
-					this.$refs.uToast.show({
-						message: this.$t('注册成功'),
-						type: 'success',
-						duration: 1200,
-						complete: () => this.$tools.Navigate.redirectTo('/pages-common/account/login/index', {
-							account: this.query.account
-						})
+					uni.showToast({
+						icon: 'none',
+						title: this.$t('注册成功'),
+						success() {
+							this.$tools.Navigate.redirectTo('/pages-common/account/login/index', {
+								account: this.query.account
+							})
+						}
 					})
 				}
 			}

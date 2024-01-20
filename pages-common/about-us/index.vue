@@ -16,18 +16,8 @@
 					V{{appSystemInfo.appVersion}}
 				</view>
 				<view class="desc initial p-4 text-i2">
-					<p>"Fillshort" is an app designed for users who love to watch short dramas. Whether you are a keen TV fan or want to discover new short series, "Fillshort" can meet your needs.</p>
-					<p>The app brings together skits of all genres and styles, so you can enjoy great episodes anytime, anywhere. With a simple and intuitive interface and a smooth HD playback experience, you can easily browse and watch your favorite short series, whether it is a hit movie or a classic old series.</p>
+					<u-parse :content="$store.state.sysConfig[0].value"></u-parse>
 				</view>
-				<!-- <view class="mt-auto main-text-color pb-3">
-					<span @click="openAgree(1)">《{{$t('用户协议')}}》</span>
-					<span class="text-light">| |</span>
-					<span @click="openAgree(2)">《{{$t('隐私政策')}}》</span>
-				</view>
-				<view class="text-light pb-3 d-flex a-center flex-column j-center font">
-					<span>{{$t('由个人开发者高江华 版权所有')}}</span>
-					<span>Copyright c 2022-{{new Date().getFullYear()}}；ALL Rights Reserved</span>
-				</view> -->
 			</view>
 		</m-scroll-y>
 	</view>

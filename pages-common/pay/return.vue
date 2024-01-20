@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 		<!-- 顶部导航栏 -->
-		<m-navbar bgColor="#transparent" :borderBottom="false" textColor="#fff" :value="value" i18n></m-navbar>
+		<m-navbar unBack @pageBack="pageBack" bgColor="#transparent" :borderBottom="false" textColor="#fff" :value="value" i18n></m-navbar>
 		<view class="content pt-10 d-flex a-center flex-column">
 			<view v-if="loading == 0" class="ruen d-flex flex-column a-center j-center">
 				<view class="d-flex a-center j-center font-weight" 
@@ -66,6 +66,10 @@
 					this.value = 'page.支付失败'
 				}
 				clearInterval(this.time)
+			},
+			// 返回
+			pageBack() {
+				this.$tools.Navigate.switchTab('/pages/tabbar/theater/index')
 			}
 		}
 	}

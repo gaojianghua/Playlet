@@ -16,7 +16,7 @@
 			</view>
 			<view class="userinfo w-100 mt-5 px-3 py-1">
 				<view class="userinfo-item d-flex a-center j-sb" v-for="(item, i) in userinfo" :key="i"
-					@click="openModel(i)">
+					>
 					<view class="userinfo-item-key line-h">
 						{{item.key}}
 					</view>
@@ -26,7 +26,7 @@
 							@click="copyInviteCode(item.value)">
 							{{$t('复制')}}
 						</view>
-						<u-icon v-if="i == 0" name="arrow-right" color="#111" size="16"></u-icon>
+						<!-- <u-icon v-if="i == 0" name="arrow-right" color="#111" size="16"></u-icon> -->
 					</view>
 				</view>
 			</view>
@@ -42,7 +42,6 @@
 				</u-input>
 			</view>
 		</m-modal>
-		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -109,15 +108,7 @@
 			// 复制邀请码
 			copyInviteCode(data) {
 				uni.setClipboardData({
-					data,
-					showToast: false,
-					success: () => {
-						this.$refs.uToast.show({
-							message: this.$t('复制成功'),
-							type: 'success',
-							duration: 1200
-						})
-					}
+					data
 				})
 			},
 			// 打开弹出框
@@ -128,10 +119,9 @@
 			// 修改用户名
 			confirmChangeUsername() {
 				this.show = false
-				this.$refs.uToast.show({
-					message: this.$t('修改成功'),
-					type: 'success',
-					duration: 1200
+				uni.showToast({
+					icon: 'none',
+					title: this.$t('修改成功')
 				})
 			}
 		}

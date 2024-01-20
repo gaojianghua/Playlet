@@ -129,7 +129,6 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -316,10 +315,9 @@
 				let { code, data } = await buyVideo(this.query)
 				if (code == 200) {
 					this.getData()
-					this.$refs.uToast.show({
-						message: this.$t('购买成功'),
-						type: 'success',
-						duration: 1200
+					uni.showToast({
+						icon: 'none',
+						title: this.$t('购买成功')
 					})
 				}
 				this.viewShow = false

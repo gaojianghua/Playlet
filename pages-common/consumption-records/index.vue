@@ -9,7 +9,7 @@
 			</u-empty>
 			<view v-if="list.length != 0" class="px-2">
 				<view class="item bg-white rounded-1 d-flex a-center p-2 mt-2"
-					v-for="(item, i) in list" :key="i">
+					v-for="(item, i) in list" :key="i" @click="openDetail(item)">
 					<u-image radius="6" width="148rpx" height="192rpx" :src="item.full_img"></u-image>
 					<view class="info flex-1 ml-2 d-flex flex-column j-sb" style="height: 192rpx;">
 						<view class="info-title text-white font-weight">
@@ -24,7 +24,7 @@
 							</view>
 							<view class="d-flex a-center ml-auto">
 								<u-image width="40rpx" height="40rpx" src="/static/img/my/icon.png"></u-image>
-								<view class="main-text-color d-flex a-center font-weight font-md ml-1 line-h">
+								<view class="main-text-color d-flex a-center font-weight font-md line-h">
 									{{item.zprice}}
 								</view>
 							</view>
@@ -96,6 +96,14 @@
 					clearTimeout(time)
 				}, 1000)
 			},
+			// 去详情页
+			openDetail(i) {
+				let obj = {
+					vid: i.sid,
+					mid: i.smid
+				}
+				this.$tools.Navigate.navigateTo('/pages-common/detail/index', obj)
+			}
 		},
 		computed: {
 			scrollStyle() {

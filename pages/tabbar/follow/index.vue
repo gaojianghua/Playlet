@@ -23,10 +23,10 @@
 				icon="/static/img/common/empty.png">
 			</u-empty>
 			<view v-if="list.length != 0" class="list px-2 d-flex flex-wrap">
-				<view class="item mt-2 d-flex flex-column position-relative" v-for="(item, i) in list" :key="i"
+				<view class="item mt-3 d-flex flex-column position-relative" v-for="(item, i) in list" :key="i"
 					@click.stop="itemClick(item)">
 					<image class="item-img" :src="item.videolist.full_img" mode=""></image>
-					<view class="item-name flex-1 line-h mt-2 text-white initial text-ellipsis1">
+					<view class="item-name flex-1 line-h mt-2 text-white initial text-ellipsis2">
 						{{item.videolist.name}}
 					</view>
 					<view v-if="isEdit" style="background: #11111180;"
@@ -132,7 +132,7 @@
 					vid: i.vid,
 					mid: i.video.id
 				}
-				this.$tools.Navigate.navigateTo('/pages-common/detail/index', i)
+				this.$tools.Navigate.navigateTo('/pages-common/detail/index', obj)
 			},
 			// 单选
 			checkClick(i) {
@@ -292,6 +292,11 @@
 
 			.item:nth-child(3n) {
 				margin-right: 0;
+			}
+			.item:nth-child(1),
+			.item:nth-child(2),
+			.item:nth-child(3){
+				margin-top: 10rpx;
 			}
 		}
 	}

@@ -46,7 +46,6 @@
 				{{$t('确定退出登录吗？')}}
 			</view>
 		</m-modal>
-		<u-toast ref="uToast"></u-toast>
 		<c-lang-model :show="langShow" @close="langShow = false" @confirmSwitch="confirmSwitch" />
 	</view>
 </template>
@@ -108,10 +107,9 @@
 					this.$store.commit('updateToken', '')
 					this.$store.commit('updateUserinfo', {})
 					this.show = false
-					this.$refs.uToast.show({
-						message: this.$t('退出登录成功'),
-						type: 'success',
-						duration: 1200
+					uni.showToast({
+						icon: 'none',
+						title: this.$t('退出登录成功')
 					})
 				}
 			},
@@ -122,10 +120,9 @@
 				this.$i18n.locale = lang
 				uni.setLocale(lang)
 				this.langShow = false
-				this.$refs.uToast.show({
-					message: this.$t('切换语言成功'),
-					type: 'success',
-					duration: 1200
+				uni.showToast({
+					icon: 'none',
+					title: this.$t('切换语言成功')
 				})
 			}
 		},
