@@ -21,7 +21,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="vip p-3 mt-3 d-flex  flex-column j-around" @click="openVIP">
+			<view v-if="userinfo" class="vip p-3 mt-3 d-flex  flex-column j-around" @click="openVIP">
 				<view class="vip-name font-md d-flex a-center line-h">
 					{{userinfo.group_id == 2 && $store.state.token ? $t('尊贵的VIP会员') : $t('会员专属')}}
 					<u-image class="ml-2" width="30rpx" height="30rpx" src="/static/img/my/right.png"></u-image>

@@ -75,7 +75,7 @@
 					uni.showToast({
 						icon: 'none',
 						title: this.$t('登录成功'),
-						success() {
+						success: () => {
 							this.$tools.Navigate.navigateBack()
 						}
 					})
