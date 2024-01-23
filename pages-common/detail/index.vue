@@ -28,6 +28,13 @@
 							{{$t('追剧')}}
 						</view>
 					</view>
+					<view class="d-flex a-center j-center flex-column mt-3" @click.stop="selectEpisode">
+						<image style="width: 70rpx; height: 70rpx;"
+							src="/static/img/common/episode.png"></image>
+						<view class="font text-white">
+							{{$t('剧集')}}
+						</view>
+					</view>
 				</view>
 				<view class="text-white" style="position:absolute;left:20rpx;bottom: 100px;">
 					<view class="text-ellipsis5" style="width: 500rpx;">
@@ -36,15 +43,15 @@
 					<view class="text-ellipsis5 mt-2" style="width: 500rpx;">
 						{{detail.info.story}}
 					</view>
-					<view class="d-flex a-center" @click.stop="selectEpisode">
+					<!-- <view class="d-flex a-center" @click.stop="selectEpisode">
 						<span class="text-white mr-1">{{$t('选择剧集')}}</span>
 						<u-icon name="arrow-right" color="#fff" size="14"></u-icon>
-					</view>
+					</view> -->
 				</view>
 			</template>
 		</yingbing-video>
 		<m-popup :show="show" i18n @close="showClose" title="选择剧集">
-			<m-scroll-y :isLoading="false" :scrollStyle="{height: '60vh'}" :isCustomRefresh="false">
+			<m-scroll-y bgColor="#111" :isLoading="false" :scrollStyle="{height: '60vh'}" :isCustomRefresh="false">
 				<view class="select w-100 d-flex flex-wrap p-3">
 					<view @click="openVideo(i)" class="item hidden mt-2 d-flex flex-column position-relative"
 						v-for="(item, i) in detail.list" :key="i">
@@ -53,7 +60,7 @@
 							{{item.name}}
 						</view>
 						<view v-if="current == i"
-							class="position-absolute top-0 left-0 right-0 bottom-0 text-light-muted d-flex a-center j-center"
+							class="position-absolute top-0 left-0 right-0 bottom-0 text-white d-flex a-center j-center"
 							style="background-color: #00000090;">
 							{{$t('当前播放')}}
 						</view>
@@ -129,6 +136,56 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 充值 -->
+		<u-overlay :show="upShow" @click="()=>{}">
+			<view class="position-absolute top-half left-half tf-half-xy">
+				<view class="position-relative top-up p-3">
+					<view class="recharge">
+						<view class="recharge-title d-flex a-center j-center py-2">
+							<view class="line-h text-white font-md ml-1">
+								{{$t('余额不足，请充值')}}
+							</view>
+						</view>
+						<view class="list d-flex flex-wrap a-center">
+							<view @click="changeRecharge(i)" :class="rechargeCurrent == i ? 'active' : ''" class="item mt-2 hidden d-flex flex-column" v-for="(item, i) in rechargeList" :key="i">
+								<view class="item-t d-flex a-center j-center">
+									<u-image width="50rpx" height="50rpx" src="/static/img/my/re-coin.png"></u-image>
+									<view class="item-coin ml-1">
+										{{item.gold}}
+									</view>
+								</view>
+								<view class="item-b d-flex a-center j-center" :class="rechargeCurrent == i ? 'bactive' : ''">
+									<view class="item-price">
+										{{$store.state.moneySymbol}}{{item.amount}}
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="bottom mt-3">
+						<u-input fontSize="28rpx" @change="inputChange" color="#111" maxlength="16" placeholderStyle="color: #808080;font-size: 28rpx;"
+							:customStyle="{height: '110rpx', caretColor: '#111'}" type="number" border="none"
+							:placeholder="$t('输入自定义金额')" v-model="amount">
+							<view slot="suffix" class="gold px-2">
+								{{gold}} {{$t('金币')}}
+							</view>
+						</u-input>
+					</view>
+					<view class="notice mt-2 font">
+						{{$t('充值说明')}}: 1{{$store.state.moneySymbol}}={{rate}}{{$t('金币')}}
+					</view>
+					<u-button :hairline="false" loadingSize="16" :text="$t('付费')" :loading="req" @click="openPay"
+						class="btons d-flex a-center j-center mt-4">
+					</u-button>
+					<view class="notice d-flex a-center flex-column">
+						<span class="mt-1 text-white font">{{tips}}</span>
+					</view>
+					<view class="position-absolute left-half tf-half-x" style="bottom: -120rpx;" @click="upShow = false">
+						<u-image width="76rpx" height="76rpx" src="/static/img/common/close.svg" mode=""></u-image>
+					</view>
+				</view>
+			</view>
+		</u-overlay>
 	</view>
 </template>
 
@@ -136,6 +193,7 @@
 	import MPopup from '@/main_modules/main-ui/m-popup/index.vue'
 	import {
 		getVideoInfo,
+		getRechargeConfig
 	} from '@/utils/request/api/get.js'
 	import {
 		addCollect,
@@ -161,6 +219,7 @@
 				collShow: false,
 				payShow: false,
 				viewShow: false,
+				upShow: false,
 				payText: '',
 				isAll: false,
 				timeShow: false,
@@ -168,7 +227,20 @@
 				isObject: false,
 				initialTime: 0,
 				scheduleTime: 0,
-				timeout: null
+				timeout: null,
+				rechargeList: [],
+				rechargeCurrent: 0,
+				query: {
+					amount: '',
+					code: 'paypal',
+					return_url: window.location.origin + '/pages-common/pay/return',
+					cancel_url: window.location.origin + '/pages-common/pay/cancel'
+				},
+				amount: '',
+				gold: 0,
+				rate: 0,
+				tips: '',
+				req: false
 			}
 		},
 		onLoad(args) {
@@ -189,6 +261,57 @@
 			// 初始化
 			init() {
 				this.getData()
+				this.getRechargeList()
+			},
+			// 获取充值列表
+			async getRechargeList() {
+				let { code, data } = await getRechargeConfig()
+				if (code == 200) {
+					this.rate = data.rate
+					this.tips = data.tips
+					this.rechargeList = data.options
+					this.query.amount = data.options[0].amount
+				}
+			},
+			// 选择价格
+			changeRecharge(i) {
+				this.query.amount = this.rechargeList[i].amount
+				this.rechargeCurrent = i
+			},
+			// 输入价格
+			inputChange(e) {
+				this.gold = e * this.rate
+			},
+			// 支付
+			async openPay() {
+				this.req = true
+				this.$refs.uToast.show({
+					type: 'loading',
+					message: "loading",
+					duration: 60000
+				})
+				if (this.amount) {
+					this.query.amount = this.amount
+				}
+				let { code, data} = await rechargeGold(this.query)
+				if (code == 200) {
+					this.$store.dispatch('getUserinfo')
+					// #ifdef APP-PLUS
+					plus.runtime.openURL(data.url)
+					// #endif
+					// #ifdef H5
+					location.href = data.url
+					// #endif
+					this.$refs.uToast.hide()
+					this.req = false
+				} else {
+					this.req = false
+					this.$refs.uToast.hide()
+				}
+				let time = setTimeout(() => {
+					this.req = false
+					clearTimeout(time)
+				}, 60000)
 			},
 			// 获取数据
 			async getData() {
@@ -230,13 +353,14 @@
 			},
 			// 购买视频
 			openPayVideo(i) {
-				this.isAll = i
-				if (!i) {
-					this.payText = '确定购买单集视频吗？'
-				} else {
-					this.payText = '确定购买整部视频吗？'
-				}
-				this.viewShow = true
+				// this.isAll = i
+				// if (!i) {
+				// 	this.payText = '确定购买单集视频吗？'
+				// } else {
+				// 	this.payText = '确定购买整部视频吗？'
+				// }
+				// this.viewShow = true
+				this.upShow = true
 			},
 			// 点赞
 			async openLike() {
@@ -399,6 +523,98 @@
 
 		/deep/ .u-popup__content {
 			background-color: #00000099;
+		}
+		
+		.bottom {
+			background-color: #FFEDE2;
+			border-radius: 20rpx;
+			padding: 0 30rpx;
+		
+			.code {
+				border-radius: 20rpx;
+			}
+			.gold{
+				height: 100%;
+				background-color: #333;
+				border-radius: 4rpx;
+				color: #EE7623;
+			}
+		}
+		
+		.notice{
+			font-size: 28rpx;
+			font-weight: 400;
+			color: #000;
+			line-height: 32rpx;
+		}
+		
+		.recharge{
+			
+			.recharge-title{
+				
+			}
+			
+			.list{
+				
+				.item{
+					width: 48.5%;
+					background: #FFEDE2;
+					border-radius: 20rpx;
+					margin-right: 3%;
+					
+					.item-t{
+						height: 84rpx;
+						background: linear-gradient(180deg, #FEFAF5 0%, #F3B38E 100%);
+						
+						.item-coin{
+							color: #E35D00;
+							font-size: 40rpx;
+						}
+					}
+					.item-b{
+						height: 68rpx;
+						
+						.item-price{
+							font-size: 32rpx;
+							color: #381301;
+						}
+					}
+					.bactive{
+						background-color: #E02929;
+						.item-price{
+							color: #fff;
+						}
+					}
+				}
+				
+				.active{
+					border: 4rpx solid #E02929;
+					.item-t{
+						height: 80rpx;
+					}
+					.item-b{
+						height: 64rpx;
+					}
+				}
+				
+				.item:nth-child(2n) {
+					margin-right: 0 !important;
+				}
+			}
+		}
+		.btons {
+			height: 100rpx;
+			background: #E02929;
+			color: #fff;
+			border: none;
+			border-radius: 16rpx;
+		}
+
+		.top-up{
+			width: 618rpx;
+			height: 880rpx;
+			background: url('/static/img/common/popbg.png') no-repeat;
+			background-size: 100% 100%;
 		}
 
 		.select {
