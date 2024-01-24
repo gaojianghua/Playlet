@@ -1,6 +1,6 @@
+import store from '@/store/index.js'
 // 接口报错提示处理
 export const errorMessage = (res) => {
-	
 	const {
 		data
 	} = res
@@ -16,9 +16,7 @@ export const errorMessage = (res) => {
 			icon: 'none',
 			duration: 2000,
 			success: () => {
-				let zh = str.indexOf('token')
-				let en = str.indexOf('Token')
-				if (zh != -1 || en != -1) {
+				if (str.toLocaleLowerCase().includes('token')) {
 					uni.clearStorageSync()
 					store.commit('updateUserinfo', {})
 					store.commit('updateToken', '')
