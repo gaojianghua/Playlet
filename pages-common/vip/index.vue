@@ -5,7 +5,7 @@
 		<m-scroll-y placeHeight="150rpx" :isLoading="false" :scrollStyle="scrollStyle" :isCustomRefresh="false">
 			<view class="p-2">
 				<view class="user position-relative ">
-					<view class="d-flex a-center">
+					<view v-if="$store.state.token" class="d-flex a-center">
 						<u-image width="80rpx" height="80rpx"
 							src="/static/img/my/avatar.png"></u-image>
 						<view class="text-white text-ellipsis1 font-weight ml-2">
@@ -14,6 +14,9 @@
 						<view class="ml-auto flex-shrink text-light-muted">
 							ID: {{$store.state.userinfo.id}}
 						</view>
+					</view>
+					<view v-else class="text-white" style="height: 80rpx;line-height: 80rpx;">
+						{{$t('您还未登录。请登录后购买！')}}
 					</view>
 					<view class="position-absolute d-flex flex-column left-0 w-100 vip hidden">
 						<u-image width="126rpx" height="53rpx" src="/static/img/my/vip-tag.png"></u-image>
@@ -141,6 +144,9 @@
 			},
 			// 开通VIP
 			async openVIP() {
+				if (!this.$store.state.token) {
+					return this.$tools.Navigate.navigateTo('/pages-common/account/login/index')
+				}
 				let { code, data } = await buyVIP(this.query)
 				if (code == 200) {
 					this.$store.dispatch('getUserinfo')

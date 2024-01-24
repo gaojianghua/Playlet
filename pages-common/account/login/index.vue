@@ -59,7 +59,13 @@
 						title: this.$t('请输入邮箱')
 					})
 				}
-				if(this.isLoginType == 3 && !this.query.password) {
+				if(!this.$check.isEmail(this.query.account)) {
+					return uni.showToast({
+						icon: 'none',
+						title: this.$t('邮箱格式不正确')
+					})
+				}
+				if(!this.query.password) {
 					return uni.showToast({
 						icon: 'none',
 						title: this.$t('请输入密码')

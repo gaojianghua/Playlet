@@ -95,7 +95,8 @@
 	"购买成功": "successful purchase",
 	"剧集": "Episode",
 	"余额不足，请充值": "Insufficient balance, please top up",
-
+	"您还未登录。请登录后购买！": "You are not logged in. Please login to purchase!",
+	"邮箱格式不正确": "Email format is incorrect",
 
 
 

@@ -78,8 +78,11 @@
 		<!-- 购买剧集弹窗 -->
 		<m-popup :show="payShow" i18n @close="payShowClose" title="购买剧集">
 			<view class="d-flex flex-column p-3" style="background-color: #000;">
-				<view class="money font-md text-white">
+				<view v-if="$store.state.token" class="money font-md text-white">
 					{{$t('我的余额')}}: {{$store.state.userinfo.money}}
+				</view>
+				<view v-else class="money font-md text-white">
+					{{$t('您还未登录。请登录后购买！')}}
 				</view>
 				<view class="d-flex a-center text-white j-sb mt-2">
 					<view class="money-btn d-flex a-center j-center flex-column py-2 px-2 main-bg-color" @click="openPayVideo(false)">
@@ -174,7 +177,7 @@
 					<view class="notice mt-2 font">
 						{{$t('充值说明')}}: 1{{$store.state.moneySymbol}}={{rate}}{{$t('金币')}}
 					</view>
-					<u-button :hairline="false" loadingSize="16" :text="$t('付费')" :loading="req" @click="openPay"
+					<u-button :hairline="false" loadingSize="16" :text="$t('付费')" :loading="req" @click="openTopUp"
 						class="btons d-flex a-center j-center mt-4">
 					</u-button>
 					<view class="notice d-flex a-center flex-column">
@@ -186,6 +189,7 @@
 				</view>
 			</view>
 		</u-overlay>
+		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -199,7 +203,8 @@
 		addCollect,
 		buyVideo,
 		videoLog,
-		setLike
+		setLike,
+		rechargeGold
 	} from '@/utils/request/api/post.js'
 	export default {
 		components: {
@@ -230,7 +235,7 @@
 				timeout: null,
 				rechargeList: [],
 				rechargeCurrent: 0,
-				query: {
+				topUpQuery: {
 					amount: '',
 					code: 'paypal',
 					return_url: window.location.origin + '/pages-common/pay/return',
@@ -270,12 +275,12 @@
 					this.rate = data.rate
 					this.tips = data.tips
 					this.rechargeList = data.options
-					this.query.amount = data.options[0].amount
+					this.topUpQuery.amount = data.options[0].amount
 				}
 			},
 			// 选择价格
 			changeRecharge(i) {
-				this.query.amount = this.rechargeList[i].amount
+				this.topUpQuery.amount = this.rechargeList[i].amount
 				this.rechargeCurrent = i
 			},
 			// 输入价格
@@ -283,7 +288,7 @@
 				this.gold = e * this.rate
 			},
 			// 支付
-			async openPay() {
+			async openTopUp() {
 				this.req = true
 				this.$refs.uToast.show({
 					type: 'loading',
@@ -291,9 +296,9 @@
 					duration: 60000
 				})
 				if (this.amount) {
-					this.query.amount = this.amount
+					this.topUpQuery.amount = this.amount
 				}
-				let { code, data} = await rechargeGold(this.query)
+				let { code, data} = await rechargeGold(this.topUpQuery)
 				if (code == 200) {
 					this.$store.dispatch('getUserinfo')
 					// #ifdef APP-PLUS
@@ -353,14 +358,33 @@
 			},
 			// 购买视频
 			openPayVideo(i) {
-				// this.isAll = i
-				// if (!i) {
-				// 	this.payText = '确定购买单集视频吗？'
-				// } else {
-				// 	this.payText = '确定购买整部视频吗？'
-				// }
-				// this.viewShow = true
-				this.upShow = true
+				if (!this.$store.state.token) {
+					return this.$tools.Navigate.navigateTo('/pages-common/account/login/index')
+				}
+				this.isAll = i
+				let obj = {
+					vid: this.query.vid,
+					mid: this.query.mid,
+					vtime: this.scheduleTime
+				}
+				this.topUpQuery.return_url = this.topUpQuery.return_url + this.$tools.Navigate.setPlaintext(obj)
+				this.topUpQuery.cancel_url = this.topUpQuery.cancel_url + this.$tools.Navigate.setPlaintext(obj)
+				if (!i) {
+					this.payText = '确定购买单集视频吗？'
+					if (this.$store.state.userinfo.money >= this.detail.list[this.current].price) {
+						this.viewShow = true
+					}else {
+						this.upShow = true
+						
+					}
+				} else {
+					this.payText = '确定购买整部视频吗？'
+					if (this.$store.state.userinfo.money >= this.detail.info.price) {
+						this.viewShow = true
+					}else {
+						this.upShow = true
+					}
+				}
 			},
 			// 点赞
 			async openLike() {

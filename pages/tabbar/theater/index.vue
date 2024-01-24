@@ -19,7 +19,7 @@
 			bgColor="transparent" @onRefresh="onRefresh">
 			<u-swiper bgColor="transparent" :list="swiperList" keyName="src" circular :loading="swiperLoading"
 				@click="swiperClick" radius="0" height="350rpx" imgMode="aspectFill"></u-swiper>
-			<view class="px-2">
+			<view class="px-3">
 				<view class="d-flex py-3 a-center j-sb">
 					<view class="menu-item d-flex a-center j-center flex-column" v-for="(item, i) in gridList" :key="i"
 						@click="$tools.Navigate.navigateTo(item.page)">
@@ -54,7 +54,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="p-3 mt-3 hold">
+				<view class="mt-3">
 					<view class="d-flex a-center j-sb">
 						<text style="font-weight: 500;color: #fff;font-size: 32rpx;">{{$t('最新热门')}}</text>
 					</view>
@@ -73,7 +73,8 @@
 									</view>
 								</view>
 							</view>
-							<view class="item-title font-md line-h-md mt-2 text-white text-ellipsis2">{{ item.name }}
+							<view class="item-title font-md line-h-md py-1 px-2 text-white text-ellipsis2">
+								{{ item.name }}
 							</view>
 						</view>
 					</view>
@@ -249,7 +250,7 @@
 		}
 
 		.menu-item {
-			width: 162rpx;
+			width: 156rpx;
 			height: 156rpx;
 			background: #333333;
 			border-radius: 16rpx;
@@ -258,6 +259,8 @@
 		.list-item {
 			width: 48.5%;
 			margin-right: 3%;
+			background: #333333;
+			border-radius: 16rpx;
 		}
 
 		.list-item:nth-child(1),
@@ -297,11 +300,6 @@
 	}
 
 	.popular {
-		background: #333333;
-		border-radius: 16rpx;
-	}
-
-	.hold {
 		background: #333333;
 		border-radius: 16rpx;
 	}
